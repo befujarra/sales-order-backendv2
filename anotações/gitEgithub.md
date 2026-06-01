@@ -1,236 +1,223 @@
-Controle de versão
-versionamento.
+# Git e GitHub
 
-ajuda a reverter, alterar entre as versoes e controlar todas as modificações feitas
+## Controle de versão
 
-Repositorio: como nos referimos ao projeto como todo, o diretorio raiz a partir de onde serao monitorados todas as alterações
+Versionamento ajuda a reverter, alternar entre as versões e controlar todas as modificações feitas no projeto.
 
+## Conceitos básicos
 
-Commit: é o ato de salvar uma ou mais alterações no codigo e tambem pode se referir ao conjunto dessas alterações
+- **Repositório**: como nos referimos ao projeto como um todo; o diretório raiz a partir do qual serão monitoradas todas as alterações.
+- **Commit**: é o ato de salvar uma ou mais alterações no código e também pode se referir ao conjunto dessas alterações.
+- **Working tree**: é o espaço de trabalho onde você faz modificações nos arquivos do seu projeto. Quando você edita, cria ou deleta arquivos, essas mudanças acontecem na working tree.
+- **Staging**: é a área de preparação onde as alterações são separadas para serem salvas em um commit, ou seja, ela permite escolher exatamente o que será salvo.
+- **Branches**: são ramificações que podemos criar a partir de um ponto no histórico do projeto para trabalhar paralelamente, sendo assim possível trabalhar sem afetar a ramificação principal.
 
-Working tre: é o espaço de trabalho onde voce faz modificações nos arquivos do seu projeto. Quando voce edita, criaou deleta arquivos, essas mudanças acontecem na working tree
+## Fluxo de trabalho básico
 
-Staging: é a area de preparação onde as alterações são separadas para serem salvas em um commit, ou seja, elas permitem escolher exatamente o que sera salvo
+1. Para começar, precisamos inicializar um novo repositório a partir de um diretório.
+2. Em seguida, podemos começar a modificar o conteúdo do repositório, ou seja, criar, modificar e excluir arquivos.
+3. Para salvar essas modificações, primeiro precisamos adicioná-las à área de preparação (stage).
+4. Depois de escolher os arquivos, damos commit nas alterações, gravando-as no repositório.
+5. Pronto, temos a primeira versão.
 
-branches: são ramificações que podemos criar a partir de um ponto no jistorico do projeto para trabalhar paralelamente, assim é possivel trabalhar sem afetar a ramificação
+### Status dos arquivos
 
-Fluxo de trabalho basico----------------------------------------
+- **U = untracked**: não rastreável (significa que é um arquivo novo que ainda não foi commitado).
+- **A = adicionado**: arquivo já presente na área de stage.
+- **M = modificado**: arquivo já rastreado que sofreu alterações.
 
-1- para começar precisamos inixializar um novo repositorio a partir de um diretorio
+## Comandos básicos
 
-2 - em seguida podemos começar a modificar o conteudo do repositorio, ou seja, criar, modificar e excluir arquivos.
+Você precisa estar dentro da pasta do projeto.
+Se for a primeira vez usando, é necessário configurar e-mail e nome:
 
-3 - para salvar essas modificações primeiro precisamos adicionar na area de preparação (stage)
-
-4- depois que escolher os arquivos, nos damos commit nas alterações, gravando elas no repositorio
-
-5 pronto, temos a primeira versao
-
-
-U= untracked: não rastreavel (siginifica que ele tem alterações ou é um arquivo novo que ainda nao foi commitado)
-A= adicionado
-
-Comandos basicos ------------------------------------------------
-
-Precisa estar dentro da pasta
-se for primeira vez usando precisa setar email e nome:
+```bash
 git config --global user.email "seu@email.com"
-git config --global user.nome "seu nome"
+git config --global user.name "seu nome"
+```
+
+| Comando | Descrição |
+| --- | --- |
+| `git --version` | Verifica a versão do Git instalada. |
+| `git init --help` | Mostra as descrições e comandos do `git init`. |
+| `git init` | Inicia o repositório na pasta (cria a pasta oculta `.git`). |
+| `git status` | Exibe a situação atual da working tree. |
+| `git rm --cached nomeArquivo` | Faz com que o arquivo volte a não ser monitorado. |
+| `git add .` | Adiciona todos os arquivos modificados ("M") e não rastreáveis ("U") à stage. |
+| `git commit` | Registra as alterações preparadas no histórico do repositório de forma definitiva. |
+| `git commit -m "mensagem"` | Faz o mesmo que `git commit`, porém com uma descrição do que foi feito. |
+| `git restore` | Reverte as alterações em um arquivo, voltando-o para o último commit. |
+| `git log` | Mostra o histórico de commits. |
+| `git diff` | Mostra as alterações entre diferentes commits, entre o commit e a working tree, etc. |
+| `git merge` | Integra mudanças entre branches. |
+
+## Boas práticas de commits
+
+- **Nomeie seus commits com cuidado**: use o `commit -m` com uma mensagem clara, explicando o que foi feito, para que quem olhar entenda facilmente o que você fez.
+- Existe uma convenção de padrões de commits: <https://www.conventionalcommits.org/en/v1.0.0/>.
+- Revise suas mudanças antes de commitá-las; teste localmente e execute também os testes automatizados.
+- Faça commits pequenos e frequentes, para que a revisão seja melhor, a mensagem do commit seja mais explicativa e a reversão seja menos agressiva.
+- Faça um commit após terminar uma pequena alteração.
+
+## Tipos de versão (Semantic Versioning)
+
+Formato: `MAJOR.MINOR.PATCH` (ex.: `0.0.0`).
+
+Cada número tem o seu papel e significado:
+
+- **MAJOR** (primeiro): indica uma nova funcionalidade ou mudanças grandes e significativas (geralmente quebra de compatibilidade).
+- **MINOR** (segundo): melhorias e funcionalidades que não irão alterar o fluxo ou o comportamento geral da aplicação.
+- **PATCH** (terceiro): correções de bugs e pequenas melhorias que não alteram funcionalidades.
+
+## Branches
+
+Branches são ramificações que permitem trabalhar em diferentes linhas de desenvolvimento dentro de um mesmo repositório.
+
+Cada branch pode conter uma série de commits independentes, permitindo que os desenvolvedores trabalhem em funcionalidades ou correções sem interferir na branch principal.
+
+- **Branch Main ou Master**: tronco da árvore.
+- **Branches**: os galhos ligados ao tronco.
+
+Elas ajudam a manter o histórico de desenvolvimento organizado e claro, além de facilitarem a colaboração entre devs, permitindo que cada um trabalhe em sua própria branch e depois integre (merge) as mudanças.
+
+### Conceitos de branch
+
+- **Branch principal** (Master ou Main): linha principal, onde fica o código limpo, sem erros, e que irá receber as mudanças das outras branches.
+- **Branch de funcionalidade**: criada a partir da branch principal, ou seja, clona a branch principal, e nela você desenvolve uma funcionalidade. Depois, você faz um merge na branch principal, integrando suas mudanças após todos os testes e resultados positivos.
+- **Branch de correção**: igual à de funcionalidade, mas voltada para correções.
+
+### Exemplo real
+
+Em projetos é comum ter mais de uma branch principal. Pode-se ter uma branch principal de qualidade e uma de desenvolvimento, além da main:
+
+- **Main**: principal (produção).
+- **Qualidade**: principal para testes.
+- **Desenvolvimento**: com novas funcionalidades e correções antes de irem para testes.
+
+### Trabalhando com branches — fluxo
+
+1. Para criar uma nova branch, primeiro entre na branch que deseja clonar: `git checkout nome-da-branch`.
+2. Depois, dentro da branch alvo, use `git checkout -b nome-da-branch-nova` para criar uma branch nova e já entrar nela, ou use `git branch nome-da-branch-nova` para apenas criar sem entrar nela.
+   - **Dica**: use `git branch` para listar todas e ter o controle das que já existem.
+3. Para integrar suas mudanças, entre na branch que irá receber as mudanças e use `git merge nome-da-branch-que-ira-enviar` para que a branch atual puxe todas as alterações.
+
+Outros comandos úteis:
+
+- `git branch --help`: mostra todos os comandos referentes a branch.
+- `git branch -d nome-da-branch`: apaga branches que não serão mais usadas.
+- `git branch -m novo-nome`: muda o nome da branch atual.
 
 
+## Conflitos de merge
 
-git --version: verifica a versao do git instalada
-git init --help: mostra as descrições e comandos
+### O que são conflitos de merge
 
-git init: inicia o repositorio na pasta(cria a pasta oculta .git)
+Conflitos de merge ocorrem quando o Git não consegue combinar automaticamente as mudanças de duas branches, geralmente por causa de alterações conflitantes no mesmo trecho de código.
 
-git status: exibe a stuação atual da working tree
-git rm --cached nomeArquivo: isso faz com que o arquivo volte a nao ser monitorado "A"
-git add . : Adiciona todos os arquivos modificados "M" e nao rastreaveis "A" para a stage
+### Como identificar conflitos
 
-git commit: registra as alterações preparadas no historico do repositorio de forma definitiva
-git commit -m "mensagem": faz o mesmo que git commit, porem com uma descrição junto do que foi feito
-git restore: reverte as alterações em um arquivo, voltando ele pro ultimo commit
-git log: mostra o historico de commits
-git diff: mostra as alterações entre diferentes commits, entre commit e a working tree, etc
+- O Git emite erro e informa os arquivos com conflito de merge.
+- Os trechos conflitantes são marcados com os símbolos: `<<<<<<<`, `=======` e `>>>>>>>`.
+- `git merge --abort`: cancela o merge em andamento.
+- Após resolver os conflitos, use `git add` e `git commit` para finalizar — ou utilize as opções da própria IDE.
 
+### Como evitar conflitos
 
-git merge - integra mudanças entre branchs
+- Comunicação regular com a equipe, para evitar trabalhar nos mesmos arquivos e trechos de código.
+- Pulls frequentes para manter a branch sempre atualizada.
+- Commits pequenos e frequentes.
 
-Boas praticas de commits --------------------------------------------------------------------------------------
+## Repositórios remotos e GitHub
 
-Nomeie os Seus commits com cuidado:
-use o commit -m com uma mensagem falando o que foi feito e deixar claro pra quem olhar e saber o que voce fez
+São versões do projeto hospedadas na internet. Elas permitem que você e os outros devs atuem no mesmo projeto a partir de diferentes locais.
 
-Existe uma convenção de padrões de commits
-link>:https://www.conventionalcommits.org/en/v1.0.0/
+- Facilitam o trabalho entre pessoas.
+- Servem como backup do código, garantindo que ele não seja perdido caso algo aconteça com o projeto local.
+- Possibilitam a integração contínua e outras práticas de DevOps.
 
-revise suas mudanças antes de commitalas, teste local e faça os testes automatizados tambem.
+O **GitHub** é uma plataforma de hospedagem de código-fonte para trabalhar com repositórios remotos. Oferece uma interface web amigável e várias ferramentas adicionais para colaboração, como pull requests, issues, wikis, kanban etc.
 
-faça pequenos commits e frequentes para que a revisão seja melhor, a mensagem do commit seja mais explicativa e e reverter seja menos agressivos
-faça um commit apos terminar uma pequena alteração
+### Trabalhando com repositórios remotos
 
-tipos de versão------------------------------------------------------------------------
-0.0.0
+1. Clone do repositório: `git clone url-repo`.
+2. Quando tiver commits que deseja integrar ao repositório, envie-os com `git push`: `git push nome-do-remote nome-da-branch`.
+3. Quando quiser sincronizar com o repositório e manter o projeto local atualizado: `git pull nome-do-remote nome-da-branch`.
 
-cada numero tem o seu papel e significado
+## SSH e setup inicial de repositório remoto
 
-o primeiro é a major: indica uma nova funcionalidade e mudanças grandes, significativas
-o segundo é minor: melhorias e funcionalidades que não irão alterar o fluxo ou o geral da aplicação
-Patch é o terceiro: correções de bigs, pequenas melhorias que nao alteram funcionalidades etc
+1. Crie a pasta do repositório local (projeto).
+2. Entre na pasta pelo terminal.
+3. Use `git init` para iniciar o repositório local.
+4. Crie o `README.md` para usar como base de commit, pois o Git só começa após o primeiro commit.
 
-branches------------------------------------------------------------------------------------------------
-branches são ramificações que permitem trabalhar em diferentes linhas de desenvolvimento dentro de um mesmo repositorio
-
-cada branch, pode conter uma serie de commits idependentes, permitindo que desenvolvedores trablhem em funcionalidades ou correções sem inteferir na branch principal
-
-Branch Main ou Master - Tronco da arvore
-branch - são os galhos ligados ao troco
-
-ajudam a manter o historico de desenvolvimento organizado e claro 
-
-Facilitam a colaboração entre devs, permitindo que cada um trabalhe em sua propria branch e depois integre (merge) as mudanças
-
-Conceitos de branch
-Branch principal - Branch Master ou Main, linha principal onde o codigo limpo, sem erros etc está e que ira receber as mudanças das branchs
-
-branchs de funcionalidade: branch criada a partir da branch principal, ou seja, ela clona a branch principal, e voce desenvolve uma funcionalidade nela, depois disso voce faz um merge nessa branch principal, voce integra suas mudanças nela apos todos os testes e resultados positivos
-
-branch de correção: igual a de funcionalidade mas para correções
-
-
-Exemplo Real:
-em projetos é comum ter mais de uma branch principal. Pode-se ter uma branch Principal de qualidade, e uma de desenvolvimento alem da main
-
-Entao seria: Main - principal
-Qualidade - principal para testes
-Desenvolvimento - com novas funcionalidades e correções antes de ir pra testes
-
-Trabalhando com branchs - fluxo
-1- para criar uma nova branch, primeiro entre na branch que precisa clonar. Para isso, git checkout nome-da-branch
-
-2- depois, dentro da branch alvo, use git checkout -b nome-da-branch-nova para criar uma branch nova e ja entrar nela
-ou use git branch nome-da-branch-nova, para só criar sem entrar nela
-
-dica: use git branch para listar todas e ter o controle das que ja existe
-
-3 - para integrar suas mudanças, entre na branch que ira receber as mudanças, e depois use git merge nome-da-branch-que-ira-enviar para que a branch atual puxe todas as alterações
-
-git branch --help: mostra todos os comandos referentes a branch
-
-git branch -d nome-da-branch: apagar branch que nao irao mais ser usadas
-
-git branch -m novo-nome: muda o nome da branch atual
-
-
-conflitos de merge ------------------------------------------------------------------------------------------
-o que são conflitos de merge:
-conflitos de merge ocorrem quando o GIT nao consegue automaticamente combinar mudanças de duas branches
-alterações conflitantes no mesmo trecho do codigo
-
-como identificar confltos:
-o git da erro e informa os arquivos com conflito de merge
-usando esses simbolos: <<<<<<<<,=========== e, >>>>>>>>
-
-git merge --abort: cancela o merge
-
-apos resolver os conflitos, use o git add e commit para reolver, ou clicando nas opções da IDE
-
-evitando:
-Comunicação regular com sua equipe para evitar trabalhar nos mesmo arquivos e trechos de codigos
-pull frequentes para manter a branch sempre atualizada
-commits pequenos e frequentes
-
-
-repositorios remotos e GitHub----------------------------------------------------------------------------
-sao versoes do projeto hospedado na internet
-permitem que voce e os outros devs atuem no mesmo projeto de diferentes locais
-
-facilitam o trabalho entre pessoas
-servem como backup do codigo, garantindo que ele nao seja perdido caso algo aconteça com o projeto local
-
-possibilitando a integração continua e outras praticas de DEVOPS
-
-GitHub é uma plataforma de hospedagem de codigo fonte para trabalhar com repositorios remotos
-
-oferece uma interface web amigavel e varias ferramentas adicionais para colaboração como pull requests, inssues, wikis, kanban etc
-
-
-Trabalhar com repos remotos:
-1 clone do repositorio git clone url-repo
-2- quando possuir commits que deseja integrar ao repositorio, envie eles com git push, git push nome-do-remote nome-da-branch
-3 quando quiser sincronizar com o repositorio e manter o projeto local atualizado, git pull nome-do-remote nome-da-branch
-
-
-
-ssh e remotos setup inicial------------------------------------------------------------------------------------
-primeiro se cria a pasta do repositorio local/projeto
-entra na pasta pelo terminal
-usa o git init pra iniciar o repositorio local
-crie o README.md para usar como base de commit, pois o git so começa depois do primeiro commit
+```bash
 git add README.md
-git commit -m "commiti inicial"
+git commit -m "commit inicial"
+```
 
-git remote add nome link-do-repo: exemplo git remote add origin https://github.com/usuario/nomeDoRepositorio
+Em seguida, adicione o remoto e faça o push:
 
-git push: para enviar os dados pro remoto - exemplo git push origin master
+```bash
+git remote add origin https://github.com/usuario/nomeDoRepositorio
+git push origin master
+```
 
+### Configurando uma chave SSH
 
-No git hub, nas configurações de conta tem a opção de SSH e GPG keys
-nessa opção voce pode criar chaves para que valide ao usar o git push
-criar no terminal>:
+No GitHub, nas configurações de conta, há a opção **SSH and GPG keys**. Nessa opção você pode criar chaves para validar o uso do `git push`.
+
+Para criar a chave no terminal:
+
+```bash
 ssh-keygen -C "email"
-escolha o diretorio
-crie uma senha
+```
 
-com isso sera salvo uma senha ssh no diretorio
-e tambem informa uma senha publica para ser registrada no github
+- Escolha o diretório.
+- Crie uma senha.
 
+Com isso, será salva uma chave SSH privada no diretório e também será gerada uma chave pública para ser registrada no GitHub.
 
-adicionar a senha:
+Adicione a chave ao agente SSH:
+
+```bash
 ssh-add caminho-do-arquivo
-digitar senha
+```
 
-com isso ao clonar o repositorio, usar o modo ssh para clone
+Em seguida, digite a senha. A partir daí, ao clonar o repositório, utilize o modo SSH para o clone.
 
+## Fork e contribuições em projetos
 
-fork e contribuições em projetos------------------------------------------------------------------------------
-fork é como se fizesse um clone de um repositorio para sua conta.
-voce copiar um repositorio de outro existente como se fosse, porem com referencia pro projeto raiz
+O **fork** funciona como um clone de um repositório para a sua conta. Você copia um repositório existente, porém mantendo a referência ao projeto raiz.
 
-assim é possivel contribuir para o projeto original, muito usado em projetos de codigo aberto
+Dessa forma, é possível contribuir para o projeto original — prática muito usada em projetos de código aberto.
 
+## Usando o `.gitignore`
 
+Esse arquivo serve para indicar quais arquivos ou tipos de arquivos não devem ser considerados pelo Git — por exemplo, `node_modules` ou `.env`.
 
-usando o .gitignore-----------------------------------------------------------------------------------------
-esse arquivo serve para indicar quais arquivos ou tipos de arquivos nao devem ser considerados pelo git.
-por exemplo o node_modules ou .env
+- Se ainda não existir no projeto, basta criar o arquivo na raiz com o nome `.gitignore` e indicar nele o que deve ser ignorado.
+- Com isso, o próprio Git emite erro ao tentar adicionar esses arquivos à stage e commitá-los.
+- Se quiser manter uma pasta vazia monitorada pelo Git, crie dentro dela um arquivo vazio chamado `.gitkeep`. Assim, a pasta com o conteúdo ignorado pode continuar sendo monitorada.
 
-se nao tiver no projeto, basta criar o arquivo na raiz chamado .gitignore
-e indicar nesse aqurivo o que deve ser inorado
-com isso, o prorpio git emite erro ao tentar add esses arquivos na stage e commitar
+## Fluxo colaborativo
 
-se quiser manter uma pasta vazia monitorada pelo git, cria um arquivo vazio chamado .gitkeep, assim a pasta com o conteudo ignorado pode continuar sendo monitorada
+1. Clonar o repositório ou fazer o setup inicial.
+2. Criar uma branch separada para trabalhar em alguma tarefa do projeto, a partir de uma branch inicial.
+3. Mudar para a nova branch (`git checkout`) e fazer as alterações.
+4. Preparar (`git add`) e, quando finalizar, guardar (`git commit`).
+5. Após finalizar a tarefa, subir a branch para o repositório remoto e abrir um pull request (`git push origin branch`).
+   - Para abrir o PR, depois de executar o push para a sua branch, vá ao GitHub, acesse a aba **Pull requests** e clique em **New pull request** — ou pule essas etapas clicando em **Compare & pull request**, que aparece em destaque nas páginas.
+   - Em seguida, escolha qual branch irá receber (base) o código e qual branch irá enviar (compare): `base: master <- compare: sua-branch`.
+   - O GitHub avisa se houver conflito.
+   - Dê um nome ao PR.
+   - Adicione uma descrição detalhada, normalmente seguindo um template adotado pelo time.
+   - Se necessário, adicione um reviewer no lado direito.
+   - Clique em **Create pull request**.
+   - Se não houver automação nem aprovação obrigatória, no final da página estará disponível o botão **Merge pull request**.
+   - Após o merge, delete a branch.
+6. O líder do projeto aprova (ou não) o pull request e integra as alterações na branch principal (`git merge`).
+7. Volte ao passo 2 e siga nesse loop.
 
-fluco colaborativo:------------------------------------------------------------------------------------------
-1 clonar repositorio ou fazer setup inicial
-2 Criar uma branch separada para trabalhar em alguma tarefa do projeto a partir de uma branch inicial
-3 mudar para a nova branch (git checkou) e fazer alteraç~es
-4 preparar (git add) e , quando finalizar, guardar (git commit)
-5 apos finalizar a tarefa, subir a branch para o repositorio remoto e abrir uma pull request (git push origin branch)
- - para abrir a PR, depois de executar push para a sua branch, va ao github, acesse a aba Pull request, clique em New pull request ou pule essas etapas clianco em compare e pull request que fica aprencendo nas paginas
- - apos isso, escolha qual branch ira receber(base) os codigo e qual branch ira enviar(compare), base:master <- compare:sua-branch
-  - o github avisa se houver conflito
-  - de um nome pra PR
-  - adicione uma descrição detalhada, normalmente usada com um template adotado pelo time
-  - se necessario, adicione um reviewer no lado direito
-  - clique em create pull request
-  - se nao houver automação, e nem aprovação no final da pagina tera o botao "merge pull request"
-  - e deletar a branch
-
-6 o lider do projeto aprova ou nao, o pull request e integra as alterações na branch principal(git merge)
-7 volta ao passo 2 e fica nesse loop
-
-obs: se demorar muito tempo em um branch, voltar na branch principal e dar git pull, depois voltar pra sua branch e dar merge pra puxar as novas atualizações pra sua branch
+> **Obs.:** se você ficar muito tempo em uma branch, volte à branch principal e dê `git pull`; depois retorne à sua branch e faça um `merge` para puxar as novas atualizações para ela.
 
 
